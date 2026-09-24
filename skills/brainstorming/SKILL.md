@@ -120,20 +120,20 @@ your path and complete them in order.
 5. **Report findings** — a recommendation; label anything built as throwaway
 
 **Bounded:**
-1. **Explore project context** — check files, docs, recent commits
-2. **Ask clarifying questions** — one at a time, the ones that matter
+1. **Explore project context** — check files, docs (including any glossary or ADRs), recent commits
+2. **Ask clarifying questions** — only the ones that change the design, each with your recommended answer; usually one short round
 3. **Present short design in chat** — approach, files touched, testing
 4. **Get approval** — STOP and wait for an explicit yes; presenting the design and starting in the same breath is skipping the gate
 5. **Implement** — proceed with the normal development workflow (TDD applies); no plan document
 
 **Architectural:**
-1. **Explore project context** — check files, docs, recent commits
+1. **Explore project context** — check files, docs (including any glossary or ADRs), recent commits
 2. **Offer the visual companion just-in-time** — NOT upfront. The first time a question would genuinely be clearer shown than described, offer it then (its own message); on approval its browser tab opens for you. If no visual question ever arises, never offer it. See the Visual Companion section below.
-3. **Ask clarifying questions** — one at a time, understand purpose/constraints/success criteria
+3. **Ask clarifying questions** — in rounds until the frontier is empty; understand purpose/constraints/success criteria
 4. **Propose 2-3 approaches** — with trade-offs and your recommendation
 5. **Present design** — in sections scaled to their complexity, get user approval after each section
 6. **Write design doc** — save to `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md` and commit
-7. **Spec self-review** — quick inline check for placeholders, contradictions, ambiguity, scope (see below)
+7. **Spec self-review** — quick inline check for placeholders, contradictions, ambiguity, scope, decision fidelity (see below)
 8. **User reviews written spec** — ask user to review the spec file before proceeding
 9. **Transition to implementation** — invoke writing-plans skill to create implementation plan
 
@@ -201,10 +201,53 @@ is the whole process.
 - Check out the current project state first (files, docs, recent commits)
 - Before asking detailed questions, assess scope: if the request describes multiple independent subsystems (e.g., "build a platform with chat, file storage, billing, and analytics"), flag this immediately. Don't spend questions refining details of a project that needs to be decomposed first.
 - If the project is too large for a single spec, help the user decompose into sub-projects: what are the independent pieces, how do they relate, what order should they be built? Then brainstorm the first sub-project through the normal design flow. Each sub-project gets its own spec → plan → implementation cycle.
-- For appropriately-scoped projects, ask questions one at a time to refine the idea
-- Prefer multiple choice questions when possible, but open-ended is fine too
-- Only one question per message - if a topic needs more exploration, break it into multiple questions
+- For appropriately-scoped projects, refine the idea through rounds of questions (below)
 - Focus on understanding: purpose, constraints, success criteria
+
+**Asking questions in rounds:**
+
+Treat the open decisions as a tree: each decision has others hanging off
+it. The **frontier** is every decision whose prerequisites are already
+settled, meaning the questions you can ask now without guessing at
+answers you haven't heard. Purpose is the root. If it's missing, round 1
+is that single question (see Establish Shared Understanding).
+
+- Ask the frontier in one round, then stop and wait. If it's large, lead
+  with the questions that unblock the most later decisions. A long round
+  gets skimmed.
+- Number each question and give your recommended answer, so your partner
+  can reply by number ("1 yes, 2 option B, 3 no, because...").
+- Prefer multiple choice when the options are known, but open-ended is fine too.
+- After each round, recompute the frontier. Settled answers unblock new
+  questions, and a later answer can reopen an earlier branch.
+- If the harness has a structured question tool, ask the round through
+  it and mark your recommendation.
+- If a question in the round would be clearer shown than told and the
+  visual companion hasn't been offered, send the offer on its own first
+  and ask the round after your partner answers.
+- If your partner asks for one question at a time, switch to that.
+
+**Facts are yours; decisions are your partner's.** Don't ask about
+anything the repo, docs, or tools can answer, such as where a flow lives,
+what a config holds, or whether a library is already in use. Look it up
+during exploration or before the round that needs it. A question that
+depends on a fact you haven't found yet waits for a later round. Don't
+settle a decision silently. If it changes behavior, scope, or an
+interface, it goes in a round with your recommendation. Write smaller
+choices into the design, and also list them in chat when you present
+it so your partner can review and override them without opening the doc.
+
+Questioning is done when the frontier is empty: every branch has been
+visited and nothing is silently assumed. Then give the write-back from
+Establish Shared Understanding, let your partner correct it, and move on
+to approaches or the design.
+
+**Sharpening terms:** when the design introduces or changes domain
+concepts, point out a term used differently from the glossary or the
+code, propose a precise term for a vague or overloaded one ("'account':
+the Customer or the User?"), and test boundaries between concepts with a
+concrete edge case, such as a half-shipped order that the customer
+cancels.
 
 **Exploring approaches:**
 
@@ -241,6 +284,9 @@ is the whole process.
 - Write the validated design (spec) to `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md`
   - (User preferences for spec location override this default)
 - Use elements-of-style:writing-clearly-and-concisely skill if available
+- If new domain terms were agreed, include a short **Terms** section: each term, a one- or two-sentence definition, and the words to avoid
+- If the repo already keeps a `CONTEXT.md` glossary, add resolved terms to it in the same commit. Keep it vocabulary only, with no implementation detail, and name the file in the spec-review message so your partner reviews both. Don't create one unless asked.
+- If the repo already keeps ADRs, offer one in the spec-review message, only for a decision that meets all three tests: hard to reverse, surprising without context, and the result of a real trade-off
 - Commit the design document to git
 
 **Spec Self-Review:**
@@ -250,6 +296,7 @@ After writing the spec document, look at it with fresh eyes:
 2. **Internal consistency:** Do any sections contradict each other? Does the architecture match the feature descriptions?
 3. **Scope check:** Is this focused enough for a single implementation plan, or does it need decomposition?
 4. **Ambiguity check:** Could any requirement be interpreted two different ways? If so, pick one and make it explicit.
+5. **Decision fidelity:** Does every answer your partner gave appear as precisely as they gave it (numbers, orderings, defaults, explicit "no"s)? Restore any that got softened into general prose.
 
 Fix any issues inline. No need to re-review — just fix and move on.
 
