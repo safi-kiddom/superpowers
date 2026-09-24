@@ -149,6 +149,9 @@ echo "SessionStart hook output tests"
 # (PowerShell ParserError; cmd.exe quote-stripping on paths with metacharacters).
 if node -e '
 const hooks = JSON.parse(require("fs").readFileSync(process.argv[1], "utf8"));
+// This fork disables the Claude Code SessionStart hook on purpose
+// (using-superpowers loads on demand instead); an empty config is valid.
+if (Object.keys(hooks.hooks).length === 0) process.exit(0);
 const entry = hooks.hooks.SessionStart[0].hooks[0];
 if (entry.shell !== "bash") {
   console.error(`SessionStart hook shell is ${JSON.stringify(entry.shell)}, expected "bash"`);
