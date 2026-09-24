@@ -7,7 +7,7 @@ description: Use when about to claim work is complete, fixed, or passing, before
 
 ## Overview
 
-**Core principle:** A status claim is only as good as the evidence you ran for it in this session.
+**Core principle:** A status claim is only as good as the evidence you ran for it since your last change.
 
 If you haven't run the command that proves a claim since your last change, you don't know that it holds. Say what you ran and what it showed; if you couldn't run it, say that instead of implying success.
 
@@ -68,4 +68,4 @@ Before reporting that something works, is fixed, or is done:
 
 Before any completion or success claim (including paraphrases like "that should do it"), and before committing, opening a PR, marking a task done, or moving to the next task.
 
-This is about grounding claims in evidence you already have or can cheaply get, not about adding extra review passes. If the verification you ran while working already covers the claim and nothing changed since, cite it.
+This is about grounding claims in evidence, not about adding extra review passes. If a run after your last change already covers the claim, cite that command and its result instead of re-running it. A slow suite is not a reason to substitute a partial run; if you can't run the full check, say so.
