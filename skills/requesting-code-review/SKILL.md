@@ -21,7 +21,7 @@ Dispatch a code reviewer subagent to catch issues before they cascade. The revie
 - Before refactoring (baseline check)
 - After fixing a complex bug
 
-For a small, self-contained change outside those cases, reading your own diff is enough; a subagent re-establishes context from scratch, which costs more than the change is worth.
+For a small change outside those cases that touches no security, data-integrity, concurrency, or public-interface code, reading your own diff is enough; a subagent re-establishes context from scratch, which costs more than the change is worth.
 
 ## How to Request
 
@@ -84,7 +84,7 @@ You: [Fix progress indicators]
 ## Red Flags
 
 **Never:**
-- Skip a review one of the cases above calls for
+- Skip a review the "Dispatch a reviewer" list calls for
 - Ignore Critical issues
 - Proceed with unfixed Important issues
 - Argue with valid technical feedback
