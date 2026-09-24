@@ -1,6 +1,6 @@
 ---
 name: using-superpowers
-description: Use when starting a task to decide which skills apply and in what order - process skills before implementation skills, invoked before exploring or asking clarifying questions
+description: Use when starting any task or conversation, before exploring files or asking clarifying questions
 ---
 
 <SUBAGENT-STOP>
@@ -9,7 +9,7 @@ If you were dispatched as a subagent to execute a specific task, ignore this ski
 
 ## The Rule
 
-**When a skill covers the task in front of you, or your human partner asks for one, invoke it before you act** — before clarifying questions, exploring the codebase, or checking files, because the skill often says how to do those things. If it turns out not to fit once you've read it, set it aside and say so in a line. Skills change between versions, so load the current one rather than working from memory of it.
+**When a skill might apply to the task in front of you, or your human partner asks for one, invoke it before you act** — before clarifying questions, exploring the codebase, or checking files, because the skill often says how to do those things. If it turns out not to fit once you've read it, set it aside and say so in a line. Skills change between versions, so load the current one rather than working from memory of it.
 
 A quick factual answer, a conversational reply, or a lookup with no follow-on work doesn't need a skill.
 

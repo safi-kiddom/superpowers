@@ -1,6 +1,6 @@
 ---
 name: brainstorming
-description: "Use before building something new or changing how something behaves - features, components, added functionality, behavior changes - when the design isn't already settled. Explores user intent, requirements and design before implementation."
+description: "Use before building something new or changing how something behaves - features, components, added functionality, behavior changes, including small ones like a new flag or endpoint. Explores user intent, requirements and design before implementation."
 ---
 
 # Brainstorming Ideas Into Designs
