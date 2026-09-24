@@ -1,6 +1,6 @@
 ---
 name: dispatching-parallel-agents
-description: Use when facing 2+ independent tasks that can be worked on without shared state or sequential dependencies
+description: Use when facing several independent, sizeable problems (unrelated failing test files, separate broken subsystems, a wide multi-area investigation) that can be worked on without shared state or sequential dependencies
 ---
 
 # Dispatching Parallel Agents
@@ -43,6 +43,7 @@ digraph when_to_use {
 - Failures are related (fix one might fix others)
 - Need to understand full system state
 - Agents would interfere with each other
+- You could finish each problem yourself in a handful of tool calls — each agent re-establishes context, re-explores, and reports back, and you then re-read the report, so small problems cost more delegated than done
 
 ## The Pattern
 
