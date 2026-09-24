@@ -11,8 +11,6 @@ Write the test first. Watch it fail. Write minimal code to pass.
 
 **Core principle:** If you didn't watch the test fail, you don't know if it tests the right thing.
 
-**Violating the letter of the rules is violating the spirit of the rules.**
-
 ## When to Use
 
 **Always:**
@@ -26,23 +24,13 @@ Write the test first. Watch it fail. Write minimal code to pass.
 - Generated code
 - Configuration files
 
-Thinking "skip TDD just this once"? Stop. That's rationalization.
-
-## The Iron Law
+## The Rule
 
 ```
 NO PRODUCTION CODE WITHOUT A FAILING TEST FIRST
 ```
 
-Write code before the test? Delete it. Start over.
-
-**No exceptions:**
-- Don't keep it as "reference"
-- Don't "adapt" it while writing tests
-- Don't look at it
-- Delete means delete
-
-Implement fresh from tests. Period.
+If you wrote code before its test, delete it and implement fresh from the failing test. Don't keep it open as a reference, stash it, or paste it back once the test fails: code you already wrote shapes the test around what it does, not what it should do.
 
 ## Red-Green-Refactor
 
@@ -112,7 +100,7 @@ Vague name, tests mock not code
 
 ### Verify RED - Watch It Fail
 
-**MANDATORY. Never skip.**
+Run it and watch it fail; this is the step that proves the test can catch the bug.
 
 ```bash
 npm test path/to/test.test.ts
@@ -166,8 +154,6 @@ Over-engineered
 Don't add features, refactor other code, or "improve" beyond the test.
 
 ### Verify GREEN - Watch It Pass
-
-**MANDATORY.**
 
 ```bash
 npm test path/to/test.test.ts
@@ -228,30 +214,21 @@ When writing or changing any test, read [writing-good-tests.md](writing-good-tes
 | "Tests after achieve same goals (spirit not ritual)" | Tests-after answer "what does this do?"; tests-first answer "what should this do?" Tests written after are biased by the code you already wrote — you verify the cases you remembered, not the ones you'd have discovered. Coverage without proof the tests work. |
 | "Already manually tested" | Manual testing is ad-hoc: no record of what you covered, no way to re-run it when the code changes, easy to forget cases under pressure. "Worked when I tried it" ≠ comprehensive. Automated tests run the same way every time. |
 | "Deleting X hours is wasteful" | Sunk cost fallacy — that time is already spent either way. The real choice: rewrite with TDD (high confidence) vs. keep it and bolt tests on after (low confidence, likely bugs). Keeping code you can't trust is the waste. |
-| "Keep as reference, write tests first" | You'll adapt it. That's testing after. Delete means delete. |
+| "Keep as reference, write tests first" | You'll adapt it, and that's testing after. Delete it. |
 | "Need to explore first" | Fine. Throw away exploration, start with TDD. |
 | "Test hard = design unclear" | Listen to test. Hard to test = hard to use. |
 | "TDD will slow me down" | TDD IS the pragmatic path: catches bugs before commit, prevents regressions, lets you refactor without fear. "Pragmatic" shortcuts mean debugging in production — slower, not faster. |
 | "Manual test faster" | Manual doesn't prove edge cases. You'll re-test every change. |
 | "Existing code has no tests" | You're improving it. Add tests for existing code. |
 
-## Red Flags - STOP and Start Over
+## Signs the Test Didn't Drive the Code
 
-- Code before test
-- Test after implementation
-- Test passes immediately
-- Can't explain why test failed
-- Tests added "later"
-- Rationalizing "just this once"
-- "I already manually tested it"
-- "Tests after achieve the same purpose"
-- "It's about spirit not ritual"
-- "Keep as reference" or "adapt existing code"
-- "Already spent X hours, deleting is wasteful"
-- "TDD is dogmatic, I'm being pragmatic"
-- "This is different because..."
+- Code exists before its test
+- The new test passes the first time it runs
+- You can't explain why the test failed
+- Tests are planned for "later"
 
-**All of these mean: Delete code. Start over with TDD.**
+When you see one of these, delete the untested code for that behavior and redo it from a failing test.
 
 ## Example: Bug Fix
 
@@ -303,7 +280,7 @@ Before marking work complete:
 - [ ] Tests use real code (mocks only if unavoidable)
 - [ ] Edge cases and errors covered
 
-Can't check all boxes? You skipped TDD. Start over.
+An unchecked box means that part of the work wasn't test-driven; redo that part test-first.
 
 ## When Stuck
 
@@ -316,15 +293,6 @@ Can't check all boxes? You skipped TDD. Start over.
 
 ## Debugging Integration
 
-Bug found? Write failing test reproducing it. Follow TDD cycle. Test proves fix and prevents regression.
+Bug found? Write a failing test reproducing it, then follow the cycle. The test proves the fix and prevents regression.
 
-Never fix bugs without a test.
-
-## Final Rule
-
-```
-Production code → test exists and failed first
-Otherwise → not TDD
-```
-
-No exceptions without your human partner's permission.
+Any exception, including those listed under When to Use, is your human partner's call.

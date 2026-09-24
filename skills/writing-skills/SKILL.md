@@ -483,6 +483,8 @@ Skills that enforce discipline (like TDD) need to resist rationalization. Agents
 
 **Psychology note:** Understanding WHY persuasion techniques work helps you apply them systematically. See persuasion-principles.md for research foundation (Cialdini, 2021; Meincke et al., 2025) on authority, commitment, scarcity, social proof, and unity principles.
 
+**Re-baseline on each new model.** Bulletproofing is a fix for a failure you measured, and whether that failure still happens depends on the model. Anthropic's prompting guidance for the Opus 5-family models is that they follow a plainly stated rule closely, and emphatic register — caps, "no exceptions", stacked red flags — over-applies: the skill fires where it shouldn't and behaves rigidly in gray areas. When the model changes, re-run the no-guidance control and the plain-wording variant before keeping any emphasis; keep it only where the plain version still fails.
+
 ### Close Every Loophole Explicitly
 
 Don't just state the rule - forbid specific workarounds:
@@ -495,15 +497,14 @@ Write code before test? Delete it.
 
 <Good>
 ```markdown
-Write code before test? Delete it. Start over.
-
-**No exceptions:**
-- Don't keep it as "reference"
-- Don't "adapt" it while writing tests
-- Don't look at it
-- Delete means delete
+If you wrote code before its test, delete it and implement fresh from the
+failing test. Don't keep it open as a reference, stash it, or paste it back
+once the test fails: code you already wrote shapes the test around what it
+does, not what it should do.
 ```
 </Good>
+
+The good version names each workaround agents actually used and gives the reason, in normal register. The techniques below (spirit-vs-letter line, rationalization table, red flags) are heavier; reach for them only when the plain version still fails your pressure scenarios on the current model.
 
 ### Address "Spirit vs Letter" Arguments
 
@@ -613,22 +614,13 @@ step2 [label="read file"];
 helper1, helper2, step3, pattern4
 **Why bad:** Labels should have semantic meaning
 
-## STOP: Before Moving to Next Skill
+## Before Moving to the Next Skill
 
-**After writing ANY skill, you MUST STOP and complete the deployment process.**
-
-**Do NOT:**
-- Create multiple skills in batch without testing each
-- Move to next skill before current one is verified
-- Skip testing because "batching is more efficient"
-
-**The deployment checklist below is MANDATORY for EACH skill.**
-
-Deploying untested skills = deploying untested code. It's a violation of quality standards.
+Finish the deployment checklist for each skill before starting another. Batching several untested skills means a shared wording problem shows up in all of them at once, and you can't tell which change caused which failure.
 
 ## Skill Creation Checklist (TDD Adapted)
 
-**IMPORTANT: Create a todo for EACH checklist item below.**
+Create a todo for each checklist item below.
 
 **RED Phase - Write Failing Test:**
 - [ ] Create pressure scenarios (3+ combined pressures for discipline skills)
@@ -652,9 +644,9 @@ Deploying untested skills = deploying untested code. It's a violation of quality
 **REFACTOR Phase - Close Loopholes:**
 - [ ] Identify NEW rationalizations from testing
 - [ ] Add explicit counters (if discipline skill)
-- [ ] Build rationalization table from all test iterations
-- [ ] Create red flags list
-- [ ] Re-test until bulletproof
+- [ ] Build rationalization table from all test iterations (if plain wording failed the pressure test)
+- [ ] Create red flags list (if plain wording failed the pressure test)
+- [ ] Re-test until the observed failures stop
 
 **Quality Checks:**
 - [ ] Small flowchart only if decision non-obvious

@@ -11,15 +11,17 @@ Dispatch a code reviewer subagent to catch issues before they cascade. The revie
 
 ## When to Request Review
 
-**Mandatory:**
-- After each task in subagent-driven development
-- After completing major feature
+**Dispatch a reviewer:**
+- After each task in subagent-driven development (that skill's loop depends on it)
+- After completing a major feature or a multi-file change
 - Before merge to main
 
-**Optional but valuable:**
-- When stuck (fresh perspective)
+**Worth it when:**
+- You're stuck and want a fresh perspective
 - Before refactoring (baseline check)
-- After fixing complex bug
+- After fixing a complex bug
+
+For a small change outside those cases that touches no security, data-integrity, concurrency, or public-interface code, reading your own diff is enough; a subagent re-establishes context from scratch, which costs more than the change is worth.
 
 ## How to Request
 
@@ -76,13 +78,13 @@ You: [Fix progress indicators]
 
 | Excuse | Reality |
 |--------|---------|
-| "I'll just review the diff myself instead of dispatching a reviewer" | You're the coordinator — reviewing the diff inline burns the context window you need to keep driving the work. Dispatch a reviewer subagent: the diff and the evaluation live in its context, and only the findings come back to you. |
+| "I'll just review the diff myself instead of dispatching a reviewer" | On a coordinator-heavy run (subagent-driven development, a large feature), reviewing inline burns the context window you need to keep driving the work — dispatch a reviewer so only the findings come back. On a small change you made yourself, reviewing inline is fine. |
 | "The reviewer needs my whole session history to understand the change" | Hand it precisely crafted context, never your session's history. That keeps the reviewer on the work product, not your thought process. |
 
 ## Red Flags
 
 **Never:**
-- Skip review because "it's simple"
+- Skip a review the "Dispatch a reviewer" list calls for
 - Ignore Critical issues
 - Proceed with unfixed Important issues
 - Argue with valid technical feedback

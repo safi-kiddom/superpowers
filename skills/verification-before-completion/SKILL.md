@@ -1,75 +1,36 @@
 ---
 name: verification-before-completion
-description: Use when about to claim work is complete, fixed, or passing, before committing or creating PRs - requires running verification commands and confirming output before making any success claims; evidence before assertions always
+description: Use when about to claim work is complete, fixed, or passing, before committing or creating PRs - requires running verification commands and confirming output before making any success claims
 ---
 
 # Verification Before Completion
 
 ## Overview
 
-**Core principle:** Evidence before claims, always.
+**Core principle:** A status claim is only as good as the evidence you ran for it since your last change.
 
-**Violating the letter of this rule is violating the spirit of this rule.**
+If you haven't run the command that proves a claim since your last change, you don't know that it holds. Say what you ran and what it showed; if you couldn't run it, say that instead of implying success.
 
-## The Iron Law
+## The Check
 
-```
-NO COMPLETION CLAIMS WITHOUT FRESH VERIFICATION EVIDENCE
-```
+Before reporting that something works, is fixed, or is done:
 
-If you haven't run the verification command in this message, you cannot claim it passes.
+1. **Identify** the command or observation that would prove the claim.
+2. **Run** it fresh and in full, after your last change.
+3. **Read** the output: exit code, failure count, warnings.
+4. **Report** what it showed. If it contradicts the claim, report the actual state with the evidence.
 
-## The Gate Function
+## What Counts as Evidence
 
-```
-BEFORE claiming any status or expressing satisfaction:
-
-1. IDENTIFY: What command proves this claim?
-2. RUN: Execute the FULL command (fresh, complete)
-3. READ: Full output, check exit code, count failures
-4. VERIFY: Does output confirm the claim?
-   - If NO: State actual status with evidence
-   - If YES: State claim WITH evidence
-5. ONLY THEN: Make the claim
-
-Skip any step = lying, not verifying
-```
-
-## Common Failures
-
-| Claim | Requires | Not Sufficient |
+| Claim | Requires | Not sufficient |
 |-------|----------|----------------|
 | Tests pass | Test command output: 0 failures | Previous run, "should pass" |
 | Linter clean | Linter output: 0 errors | Partial check, extrapolation |
 | Build succeeds | Build command: exit 0 | Linter passing, logs look good |
-| Bug fixed | Test original symptom: passes | Code changed, assumed fixed |
+| Bug fixed | Original symptom re-tested: passes | Code changed, assumed fixed |
 | Regression test works | Red-green cycle verified | Test passes once |
-| Agent completed | VCS diff shows changes | Agent reports "success" |
-| Requirements met | Line-by-line checklist | Tests passing |
-
-## Red Flags - STOP
-
-- Using "should", "probably", "seems to"
-- Expressing satisfaction before verification ("Great!", "Perfect!", "Done!", etc.)
-- About to commit/push/PR without verification
-- Trusting agent success reports
-- Relying on partial verification
-- Thinking "just this once"
-- Tired and wanting work over
-- **ANY wording implying success without having run verification**
-
-## Rationalization Prevention
-
-| Excuse | Reality |
-|--------|---------|
-| "Should work now" | RUN the verification |
-| "I'm confident" | Confidence ≠ evidence |
-| "Just this once" | No exceptions |
-| "Linter passed" | Linter ≠ compiler |
-| "Agent said success" | Verify independently |
-| "I'm tired" | Exhaustion ≠ excuse |
-| "Partial check is enough" | Partial proves nothing |
-| "Different words so rule doesn't apply" | Spirit over letter |
+| Agent completed | VCS diff shows the changes | Agent reports "success" |
+| Requirements met | Each requirement checked against the result | Tests passing |
 
 ## Key Patterns
 
@@ -81,7 +42,7 @@ Skip any step = lying, not verifying
 
 **Regression tests (TDD Red-Green):**
 ```
-✅ Write → Run (pass) → Revert fix → Run (MUST FAIL) → Restore → Run (pass)
+✅ Write → Run (pass) → Revert fix → Run (fails) → Restore → Run (pass)
 ❌ "I've written a regression test" (without red-green verification)
 ```
 
@@ -93,7 +54,7 @@ Skip any step = lying, not verifying
 
 **Requirements:**
 ```
-✅ Re-read plan → Create checklist → Verify each → Report gaps or completion
+✅ Re-read plan → Check each item → Report gaps or completion
 ❌ "Tests pass, phase complete"
 ```
 
@@ -103,18 +64,8 @@ Skip any step = lying, not verifying
 ❌ Trust agent report
 ```
 
-## When To Apply
+## When to Apply
 
-**ALWAYS before:**
-- ANY variation of success/completion claims
-- ANY expression of satisfaction
-- ANY positive statement about work state
-- Committing, PR creation, task completion
-- Moving to next task
-- Delegating to agents
+Before any completion or success claim (including paraphrases like "that should do it"), and before committing, opening a PR, marking a task done, or moving to the next task.
 
-**Rule applies to:**
-- Exact phrases
-- Paraphrases and synonyms
-- Implications of success
-- ANY communication suggesting completion/correctness
+This is about grounding claims in evidence, not about adding extra review passes. If a run after your last change already covers the claim, cite that command and its result instead of re-running it. A slow suite is not a reason to substitute a partial run; if you can't run the full check, say so.

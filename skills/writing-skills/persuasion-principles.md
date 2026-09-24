@@ -6,6 +6,8 @@ LLMs respond to the same persuasion principles as humans. Understanding this psy
 
 **Research foundation:** Meincke et al. (2025) tested 7 persuasion principles with N=28,000 AI conversations. Persuasion techniques more than doubled compliance rates (33% → 72%, p < .001).
 
+**Model dependence:** that study measured compliance on requests the models were inclined to refuse, on models of its time. Anthropic's prompting guidance for the Opus 5-family models is that they already follow plainly stated instructions closely, and that authority-style emphasis over-applies and makes behavior rigid. Treat the techniques below as a measured fix for a discipline failure that still reproduces with plain wording, not a default register — see "Re-baseline on each new model" in SKILL.md.
+
 ## The Seven Principles
 
 ### 1. Authority
